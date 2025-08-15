@@ -1,6 +1,9 @@
 # hospitalManagementSystem
 A console-based Hospital Management System in Python with MySQL. Supports CRUD operations for patients, doctors, and appointments. Modular structure with database integration for easy management and scheduling.
 
+<img width="468" height="276" alt="image" src="https://github.com/user-attachments/assets/d4686280-3763-4b75-963c-74855863bf4d" />
+
+
 # Create a database in mysql commandline using following Commands:
 CREATE DATABASE hospital_db;
 USE hospital_db;
