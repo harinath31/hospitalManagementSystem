@@ -28,17 +28,34 @@ while True:
 
     choice = input("👉 Enter your choice: ")
 
-    if choice == "1": add_patient()
-    elif choice == "2": view_patients()
-    elif choice == "3": update_patient()
-    elif choice == "4": delete_patient()
-    elif choice == "5": add_doctor()
-    elif choice == "6": view_doctors()
-    elif choice == "7": update_doctor()
-    elif choice == "8": delete_doctor()
-    elif choice == "9": book_appointment()
-    elif choice == "10": view_appointments()
-    elif choice == "11": update_appointment()
-    elif choice == "12": delete_appointment()
-    elif choice == "13": break
-    else: print("❌ Invalid choice!")
+    try:
+        if choice == "1":
+            add_patient()
+        elif choice == "2":
+            view_patients()
+        elif choice == "3":
+            update_patient()
+        elif choice == "4":
+            delete_patient()
+        elif choice == "5":
+            add_doctor()
+        elif choice == "6":
+            view_doctors()
+        elif choice == "7":
+            update_doctor()
+        elif choice == "8":
+            delete_doctor()
+        elif choice == "9":
+            book_appointment()
+        elif choice == "10":
+            view_appointments()
+        elif choice == "11":
+            update_appointment()
+        elif choice == "12":
+            delete_appointment()
+        elif choice == "13":
+            break
+        else:
+            print("❌ Invalid choice!")
+    except Exception as e:
+        print(f"⚠️ An error occurred: {e}")

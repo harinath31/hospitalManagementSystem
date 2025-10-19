@@ -38,15 +38,16 @@ def add_doctor():
         except ValueError:
             print("Please enter a valid number.")
     while True:
-        contact = input("Enter contact number (optional): ").strip()
+        contact = input("Enter contact number (optional, 10 digits): ").strip()
         if contact == "":
             contact = None
             break
-        elif contact.isdigit() and len(contact) >= 7:
+        elif contact.isdigit() and len(contact) == 10:
             break
+        elif contact.isdigit() and len(contact) != 10:
+            print("Contact number must be exactly 10 digits. Please enter a valid 10-digit number, or leave blank to skip.")
         else:
-            print("Invalid contact number. Please enter a valid number (at least 7 digits), or leave blank to skip.")
-    
+            print("Invalid contact number. Please enter exactly 10 digits, or leave blank to skip.")
     cursor.execute("INSERT INTO doctors (name, specialization, contact) VALUES (%s, %s, %s)",
                    (name, specialization, contact))
     db.commit()
@@ -69,10 +70,19 @@ def update_doctor():
     while True:
         doctor_id = input("Enter doctor ID to update: ")
         try:
-            int(doctor_id)            
-            break
-        except ValueError:    
+            doctor_id_int = int(doctor_id)
+        except ValueError:
             print("please enter a valid doctor id")
+            continue
+
+        cursor.execute("SELECT * FROM doctors WHERE doctor_id=%s", (doctor_id_int,))
+        row = cursor.fetchone()
+        if row:
+            doctor_id = doctor_id_int  # use integer id for subsequent queries
+            print(f"Found doctor: {row}")
+            break
+        else:
+            print("Doctor ID not found. Please enter a valid doctor id.")
     while True:
         name = input("Enter new name: ")      
         
@@ -119,11 +129,18 @@ def delete_doctor():
     while True:
         doctor_id = input("Enter doctor ID to delete: ")
         try:
-            int(doctor_id)            
-            break
+            doctor_id_int = int(doctor_id)
         except ValueError:
             print("please enter a valid doctor id")
-        
+            continue
+
+        cursor.execute("SELECT 1 FROM doctors WHERE doctor_id=%s", (doctor_id_int,))
+        if cursor.fetchone():
+            doctor_id = doctor_id_int
+            print(f"Found doctor with ID {doctor_id}.")
+            break
+        else:
+            print("Doctor ID not found. Please enter a valid doctor id.")
     cursor.execute("DELETE FROM doctors WHERE doctor_id=%s", (doctor_id,))
     db.commit()
     db.close()
